@@ -1,5 +1,7 @@
-// Utilizando common js 
+// Utilizando commonjs 
 const express = require('express');
+// Utilizando módulos 
+import express from 'express'
 
 // Crea la app
 const app = express()
