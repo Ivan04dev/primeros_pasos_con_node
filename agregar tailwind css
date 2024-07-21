@@ -1,2 +1,25 @@
 - Instalar tailwind css
 npm i -D tailwindcss autoprefixer postcss postcss-cli
+
+- Crear la carpeta public y dentro las subcarpetas css, js, img
+
+- Dentro de css, crear el archivo tailwind.css y agregar:
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+npx tailwindcss init -p
+
+- Después de ejecutar el comando anterior se crearán los archivos:
+postcss.config.js
+tailwind.config.js
+
+- Modificar el archivo tailwind.config.js
+content: ['./views/**/*.pug'],
+
+- Compilar tailwind agregando lo siguiente en package.json
+"css": "postcss public/css/tailwind.css -o public/css/app.css --watch"
+
+npm run css
+
+*En caso de error o con versiones anteriores se debe acambiar la extensión a .cjs
