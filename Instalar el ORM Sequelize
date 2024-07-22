@@ -1,0 +1,51 @@
+- Instalar los siguientes paquetes:
+npm i sequelize mysql2
+
+- Configuración de Squelize
+- Crear en raíz la carpeta config con db.js
+import { Sequelize } from "sequelize";
+import dotenv from 'dotenv'
+dotenv.config({path: '.env'})
+
+const db = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS ?? 'root', {
+    host: process.env.DB_HOST,
+    port: 3306,
+    dialect: 'mysql',
+    define: {
+        timestamps: true
+    },
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    },
+    operatorsAliases: false
+});
+
+export default db;
+
+- Instalar dotenv
+npm i dotenv
+
+- Configurar las variables de entorno
+- Crear en raíz el archivo .env
+DB_NAME=bienesraices_node_mvc
+DB_USER=root
+DB_PÄSS=root
+DB_HOST=localhost
+
+- Actualización de index.js
+import db from './config/db.js'
+import usuarioRoutes from  './routes/usuarioRoutes.js';
+
+// Crea la app
+const app = express()
+
+// Conexión a la DB 
+try {
+    await db.authenticate();
+    console.log('Conexión OK!')
+} catch(error) {
+    console.log(error)
+}
