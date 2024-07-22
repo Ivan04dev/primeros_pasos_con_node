@@ -1,0 +1,33 @@
+- En usuarioController.js se agrega lo siguiente:
+
+import Usuario from "../models/Usuario.js"
+
+const registrar = async (req, res) => {
+    const usuario = await Usuario.create(req.body)
+    res.json(usuario)
+}
+
+export {
+    registrar,
+}
+
+- En usuarioRoutes.js se agrega lo siguiente:
+
+import { registrar } from '../controllers/usuarioController.js';
+
+const router = express.Router();
+
+router.post('/registro', registrar)
+
+- En index.js
+
+// Conexión a la DB 
+try {
+    // Valida que exista una conexión con la DB 
+    await db.authenticate();
+    // Crea las tablas en caso de que no existan 
+    db.sync();
+    console.log('Conexión OK!')
+} catch(error) {
+    console.log(error)
+}
