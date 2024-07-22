@@ -1,0 +1,25 @@
+- Crear una cuenta en mailtrap y agregar el proyecto
+https://mailtrap.io/inboxes/2465894/messages
+
+- Instalar nodemailer
+npm i nodemailer
+
+- Seleccionar Integration > Node.js
+
+SMTP
+Credentials
+
+var transport = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "c1ba72e84aa68c",
+    pass: "54e4b9e3c6d495"
+  }
+});
+
+- Configurar las variables de entorno en el archivo .env
+EMAIL_HOST=sandbox.smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USER=c1ba72e84aa68c
+EMAIL_PASS=54e4b9e3c6d495
