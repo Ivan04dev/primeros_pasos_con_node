@@ -1,0 +1,37 @@
+- Se instala la dependencia:
+npm i express-validator
+
+- En usuarioController.js
+
+const registrar = async (req, res) => {
+    // Validación
+    await check('nombre').notEmpty().withMessage('El nombre no puede ir vacío').run(req)
+    await check('email').isEmail().withMessage('Eso no parece un email').run(req)
+    await check('password').isLength({ min: 6 }).withMessage('El password debe ser de al menos 6 caracteres').run(req)
+    await check('repetir-password').equals('password').withMessage('Los passwords no son iguales').run(req)
+    
+    let resultado = validationResult(req)
+
+    // Verifica que el resultado esté vacío (sin errores)
+    if(!resultado.isEmpty()) {
+        return res.render('auth/registro', {
+            title: 'Crear Cuenta',
+            errors: resultado.array(),
+            usuario: {
+                nombre: req.body.nombre,
+                email: req.body.email
+            }
+        })
+    }
+
+    // res.json(resultado.array());
+
+    const usuario = await Usuario.create(req.body)
+    res.json(usuario)
+}
+
+- En registrar.pug
+
+input#nombre.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Nombre" type="text" name="nombre" value= usuario ? usuario.nombre : '')
+                    
+input#email.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Email" type="email" name="email" value= usuario ? usuario.email : '')
